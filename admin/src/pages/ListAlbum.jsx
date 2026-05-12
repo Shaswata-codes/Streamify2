@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-const url = 'http://localhost:4000'
+const url = import.meta.env.VITE_BASE_URL
 
 const ListAlbum = () => {
   const [data, setData] = useState([])
@@ -31,9 +31,9 @@ const ListAlbum = () => {
 
   return (
     <div className='w-full'>
-      <h2 className='text-xl font-bold text-white mb-6'>All Albums</h2>
+      <h2 className='mb-6 text-xl font-bold text-white'>All Albums</h2>
 
-      <div className='rounded-xl overflow-hidden border border-white/10'>
+      <div className='overflow-hidden border rounded-xl border-white/10'>
         <div className='grid grid-cols-[auto_1fr_auto_auto] gap-4 bg-white/5 px-4 py-3 text-xs uppercase tracking-widest text-white/40 font-semibold'>
           <p>Cover</p>
           <p>Name</p>
@@ -46,11 +46,11 @@ const ListAlbum = () => {
             key={index}
             className='grid grid-cols-[auto_1fr_auto_auto] gap-4 items-center px-4 py-3 border-t border-white/5 hover:bg-white/5 transition-colors duration-150'
           >
-            <img src={item.image} className='w-12 h-12 rounded-lg object-cover' alt="" />
-            <p className='text-white font-medium truncate'>{item.name}</p>
+            <img src={item.image} className='object-cover w-12 h-12 rounded-lg' alt="" />
+            <p className='font-medium text-white truncate'>{item.name}</p>
             <div className='flex items-center gap-2'>
-              <div className='w-5 h-5 rounded border border-white/20' style={{ backgroundColor: item.bgColor }}></div>
-              <span className='text-white/40 text-xs font-mono hidden sm:block'>{item.bgColor}</span>
+              <div className='w-5 h-5 border rounded border-white/20' style={{ backgroundColor: item.bgColor }}></div>
+              <span className='hidden font-mono text-xs text-white/40 sm:block'>{item.bgColor}</span>
             </div>
             <button
               onClick={() => removeAlbum(item._id)}
@@ -62,7 +62,7 @@ const ListAlbum = () => {
         ))}
 
         {data.length === 0 && (
-          <div className='px-4 py-10 text-center text-white/30 text-sm'>No albums found</div>
+          <div className='px-4 py-10 text-sm text-center text-white/30'>No albums found</div>
         )}
       </div>
     </div>

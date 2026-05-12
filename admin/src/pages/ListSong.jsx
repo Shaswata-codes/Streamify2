@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-const url = 'http://localhost:4000'
+const url = import.meta.env.VITE_BASE_URL
 
 const ListSong = () => {
 

@@ -14,7 +14,7 @@ import AddAlbum  from "./pages/AddAlbum";
 import ListSong  from "./pages/ListSong";
 import ListAlbum from "./pages/ListAlbum";
 
-export const url = 'http://localhost:4000';
+export const url = import.meta.env.VITE_BASE_URL;
 
 const AdminLayout = () => {
   const [verified, setVerified] = useState(null)
@@ -45,7 +45,7 @@ const AdminLayout = () => {
   }, [])
 
   if (verified === null) return (
-    <div className='h-screen bg-black flex items-center justify-center'>
+    <div className='flex items-center justify-center h-screen bg-black'>
       <div className='w-8 h-8 border-4 border-green-900 rounded-full border-t-green-500 animate-spin'></div>
     </div>
   )
@@ -57,7 +57,7 @@ const AdminLayout = () => {
       <Sidebar />
       <div className="flex-1 h-screen overflow-y-scroll bg-[#0a0a0a]">
         <Navbar />
-        <div className="pt-8 pl-5 sm:pt-10 sm:pl-10 pr-5 sm:pr-10 pb-20 sm:pb-8">
+        <div className="pt-8 pb-20 pl-5 pr-5 sm:pt-10 sm:pl-10 sm:pr-10 sm:pb-8">
           <Routes>
             <Route path="addSong"   element={<AddSong />} />
             <Route path="addAlbum"  element={<AddAlbum />} />

@@ -3,7 +3,7 @@ import { assets } from '../assets/assets'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-const url = 'http://localhost:4000'
+const url = import.meta.env.VITE_BASE_URL
 
 
 
@@ -47,28 +47,28 @@ const AddAlbum = () => {
   return loading ? (
     <div className='flex items-center justify-center h-[80vh] w-full'>
       <div className='flex flex-col items-center gap-5'>
-        <div className='w-14 h-14 border-4 border-green-900 rounded-full border-t-green-500 animate-spin'></div>
-        <p className='text-green-400 text-lg font-semibold'>
+        <div className='border-4 border-green-900 rounded-full w-14 h-14 border-t-green-500 animate-spin'></div>
+        <p className='text-lg font-semibold text-green-400'>
           Adding album...
         </p>
       </div>
     </div>
   ) : (
-    <div className='w-full flex justify-center items-center py-10'>
+    <div className='flex items-center justify-center w-full py-10'>
       <div className='w-[90%] max-w-4xl flex flex-col items-center'>
   
-        <h2 className='text-4xl font-bold text-white mb-10 text-center'>
+        <h2 className='mb-10 text-4xl font-bold text-center text-white'>
           Add New Album
         </h2>
   
         <form
           onSubmit={onSubmitHandler}
-          className='w-full flex flex-col gap-8'
+          className='flex flex-col w-full gap-8'
         >
   
         
           <div className='flex flex-col items-center gap-3'>
-            <p className='text-base text-white/60 font-medium'>
+            <p className='text-base font-medium text-white/60'>
               Cover image
             </p>
   
@@ -90,7 +90,7 @@ const AddAlbum = () => {
                 {image ? (
                   <img
                     src={URL.createObjectURL(image)}
-                    className='w-full h-full object-cover'
+                    className='object-cover w-full h-full'
                     alt=""
                   />
                 ) : (
@@ -109,7 +109,7 @@ const AddAlbum = () => {
                       />
                     </svg>
   
-                    <span className='text-white/40 text-sm'>
+                    <span className='text-sm text-white/40'>
                       Upload cover
                     </span>
                   </div>
@@ -120,14 +120,14 @@ const AddAlbum = () => {
   
           {/* Album Name */}
           <div className='flex flex-col gap-3'>
-            <label className='text-base text-white/60 font-medium'>
+            <label className='text-base font-medium text-white/60'>
               Album name
             </label>
   
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className='w-full px-6 py-4 text-lg bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:border-green-500 focus:bg-white/10 transition-all'
+              className='w-full px-6 py-4 text-lg text-white transition-all border bg-white/5 border-white/10 rounded-xl placeholder-white/20 focus:outline-none focus:border-green-500 focus:bg-white/10'
               placeholder='Enter album name'
               type='text'
               required
@@ -136,14 +136,14 @@ const AddAlbum = () => {
   
           {/* Description */}
           <div className='flex flex-col gap-3'>
-            <label className='text-base text-white/60 font-medium'>
+            <label className='text-base font-medium text-white/60'>
               Description
             </label>
   
             <input
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
-              className='w-full px-6 py-4 text-lg bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/20 focus:outline-none focus:border-green-500 focus:bg-white/10 transition-all'
+              className='w-full px-6 py-4 text-lg text-white transition-all border bg-white/5 border-white/10 rounded-xl placeholder-white/20 focus:outline-none focus:border-green-500 focus:bg-white/10'
               placeholder='Enter description'
               type='text'
               required
@@ -152,24 +152,24 @@ const AddAlbum = () => {
   
           {/* Color */}
           <div className='flex flex-col gap-3'>
-            <label className='text-base text-white/60 font-medium'>
+            <label className='text-base font-medium text-white/60'>
               Background color
             </label>
   
-            <div className='flex items-center gap-5 flex-wrap'>
+            <div className='flex flex-wrap items-center gap-5'>
               <input
                 type="color"
                 value={bgColor}
                 onChange={(e) => setBgColor(e.target.value)}
-                className='w-16 h-14 rounded-xl border border-white/10 cursor-pointer bg-transparent'
+                className='w-16 bg-transparent border cursor-pointer h-14 rounded-xl border-white/10'
               />
   
-              <span className='text-white/50 text-base font-mono'>
+              <span className='font-mono text-base text-white/50'>
                 {bgColor}
               </span>
   
               <div
-                className='w-12 h-12 rounded-xl border border-white/10 shadow-lg'
+                className='w-12 h-12 border shadow-lg rounded-xl border-white/10'
                 style={{ backgroundColor: bgColor }}
               />
             </div>
@@ -177,7 +177,7 @@ const AddAlbum = () => {
   
           {/* Button */}
           <button
-            className='w-full py-5 text-lg bg-green-500 hover:bg-green-400 text-black font-bold rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-green-500/25'
+            className='w-full py-5 text-lg font-bold text-black transition-all duration-200 bg-green-500 hover:bg-green-400 rounded-xl hover:shadow-lg hover:shadow-green-500/25'
             type="submit"
           >
             ADD ALBUM
