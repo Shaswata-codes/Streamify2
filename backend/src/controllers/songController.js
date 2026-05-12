@@ -1,69 +1,64 @@
-import {v2 as cloudinary} from 'cloudinary';
+import { v2 as cloudinary } from 'cloudinary';
 import songModel from '../models/songModel.js';
 
-const addSongs = async(req, res)=>{
+
+const addSongs = async (req, res) => {
     try {
-        const name = req.body.name;
-        const desc = req.body.desc;
-        const album = req.body.album;
+        const { name, desc, album } = req.body;
 
         const audioFile = req.files.audio[0].path;
         const imageFile = req.files.image[0].path;
 
-        const audioUpload = await cloudinary.uploader.upload(audioFile, {resource_type: "video"});
-        const imageUpload = await cloudinary.uploader.upload(imageFile, {resource_type: "image"});
+        // ✅ Upload both at the same time instead of one after another
+        const [audioUpload, imageUpload] = await Promise.all([
+            cloudinary.uploader.upload(audioFile, { resource_type: "video" }),
+            cloudinary.uploader.upload(imageFile, { resource_type: "image" })
+        ])
 
-        const duration = `${Math.floor(audioUpload.duration/60)}:${Math.floor(audioUpload.duration%60)}`;
+        const duration = `${Math.floor(audioUpload.duration / 60)}:${String(Math.floor(audioUpload.duration % 60)).padStart(2, '0')}`;
 
         const newSong = new songModel({
             name,
             desc,
             album,
             image: imageUpload.secure_url,
-            file: audioUpload.secure_url,
-            duration: duration
+            file:  audioUpload.secure_url,
+            duration
         });
 
         await newSong.save();
-
-        res.status(200).json({
-            message: "Song added successfully",
-            song: newSong
-        });
+        res.json({ success: true, message: "Song added successfully", song: newSong });
 
     } catch (error) {
-        res.json({success: false, message: error.message});
+        res.json({ success: false, message: error.message });
     }
 }
+
 
 const listSongs = async (req, res) => {
     try {
         const allSongs = await songModel.find({});
         res.json({ success: true, songs: allSongs });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false });
+        res.json({ success: false, message: error.message });
     }
-};
+}
+
 
 const removeSong = async (req, res) => {
     try {
-        const { id } = req.body;  // ✅ FIX HERE
+        const { id } = req.body;
+        const song = await songModel.findByIdAndDelete(id);
 
-        await songModel.findByIdAndDelete(id);
+        if (!song) {
+            return res.json({ success: false, message: "Song not found" });
+        }
 
-        res.json({
-            success: true,
-            message: "Song removed successfully"
-        });
+        res.json({ success: true, message: "Song removed successfully" });
 
     } catch (error) {
-        console.error(error);
-        res.json({
-            success: false,
-            message: error.message
-        });
+        res.json({ success: false, message: error.message });
     }
-};
+}
 
 export { addSongs, listSongs, removeSong };

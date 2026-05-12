@@ -1,11 +1,12 @@
 import express from 'express'
 import { addAlbum, listAlbum, removeAlbum } from '../controllers/albumController.js'
 import upload from '../middleware/multer.js'
+import { protectAdmin } from '../middleware/authMiddleware.js'
 
-const albumRouter = express.Router();
+const router = express.Router()
 
-albumRouter.post('/add', upload.single('image'), addAlbum);
-albumRouter.get('/list', listAlbum);
-albumRouter.post('/remove', removeAlbum);
+router.post('/add', protectAdmin, upload.single('image'), addAlbum) 
+router.get('/list', listAlbum)
+router.post('/remove', protectAdmin, removeAlbum)  
 
-export default albumRouter;
+export default router
