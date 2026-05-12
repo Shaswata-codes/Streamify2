@@ -16,18 +16,19 @@ const Display = () => {
 
   const bgStyle = {
     background: isAlbum && albumData
-      ? `linear-gradient(${albumData.bgColor}, #121212)`
-      : '#121212'
+      ? `linear-gradient(180deg, ${albumData.bgColor}cc 0%, ${albumData.bgColor}44 30%, #1a1a2e 60%, #121212 100%)`
+      : 'linear-gradient(180deg, #1e1e2e 0%, #181820 40%, #121212 100%)'
   }
 
   return (
     <div
-      style={bgStyle}
-      className='w-full m-2 px-6 pt-4 rounded text-white overflow-y-auto overflow-x-hidden lg:w-[75%]'
-    >
+    style={bgStyle}
+    className='w-full h-[100%] m-2 px-6 pt-4 rounded-xl text-white overflow-y-auto overflow-x-hidden lg:w-[75%] transition-all duration-700 relative'
+  >
       <Routes>
         <Route path='/' element={<DisplayHome />} />
-        <Route path='/album/:id' element={<DisplayAlbum />} />
+        <Route path='album/:id' element={<DisplayAlbum />} />
+
       </Routes>
     </div>
   )
