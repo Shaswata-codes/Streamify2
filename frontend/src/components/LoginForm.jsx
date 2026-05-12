@@ -18,7 +18,7 @@ export default function LoginForm({ role }) {
     const endpoint = role === "admin" ? "/api/admin/login" : "/api/user/login"
 
     try {
-      const res = await fetch(`http://localhost:4000${endpoint}`, {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -56,7 +56,7 @@ if (role !== "admin") {
       <div className="flex items-center justify-center">
         <img
           src={assets.logocopy}
-          className="w-40 h-40 object-contain drop-shadow-2xl"
+          className="object-contain w-40 h-40 drop-shadow-2xl"
           alt="Streamify"
         />
       </div>

@@ -29,7 +29,7 @@ const ProtectedRoute = ({ children }) => {
       try {
 
         const res = await fetch(
-          "http://localhost:4000/api/user/verify",
+          `${import.meta.env.VITE_BASE_URL}/api/user/verify`,
           {
             headers: {
               Authorization: `Bearer ${token}`

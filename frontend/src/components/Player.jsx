@@ -43,7 +43,7 @@ const Player = () => {
         localStorage.getItem("userId")
 
       const response = await axios.post(
-        "http://localhost:4000/api/user/like-song",
+        `${import.meta.env.VITE_BASE_URL}/api/user/like-song`,
         {
           userId,
           songId: track._id
@@ -75,18 +75,18 @@ const Player = () => {
       <div className='flex items-center gap-3 w-[35%] min-w-0'>
 
         <img
-          className='w-12 h-12 rounded-md object-cover'
+          className='object-cover w-12 h-12 rounded-md'
           src={track?.image}
           alt=""
         />
 
-        <div className='min-w-0 hidden sm:block'>
+        <div className='hidden min-w-0 sm:block'>
 
           <p className='text-sm font-semibold truncate'>
             {track?.name}
           </p>
 
-          <p className='text-xs text-white/50 truncate'>
+          <p className='text-xs truncate text-white/50'>
             {track?.desc}
           </p>
 
@@ -146,9 +146,9 @@ const Player = () => {
         </div>
 
         {/* SEEK BAR */}
-        <div className='flex items-center gap-2 w-full'>
+        <div className='flex items-center w-full gap-2'>
 
-          <p className='hidden md:block text-xs text-white/40 w-10 text-right'>
+          <p className='hidden w-10 text-xs text-right md:block text-white/40'>
             {format(time?.currentTime?.minute)}:
             {format(time?.currentTime?.second)}
           </p>
@@ -156,17 +156,17 @@ const Player = () => {
           <div
             ref={seekBg}
             onClick={seekSong}
-            className='flex-1 h-1 bg-white/30 rounded-full cursor-pointer overflow-hidden'
+            className='flex-1 h-1 overflow-hidden rounded-full cursor-pointer bg-white/30'
           >
 
             <div
               ref={seekBar}
-             className='h-1 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full transition-all duration-100'
+             className='h-1 transition-all duration-100 rounded-full bg-gradient-to-r from-pink-500 to-purple-500'
             />
 
           </div>
 
-          <p className='hidden md:block text-xs text-white/40 w-10'>
+          <p className='hidden w-10 text-xs md:block text-white/40'>
             {format(time?.totalTime?.minute)}:
             {format(time?.totalTime?.second)}
           </p>
@@ -184,7 +184,7 @@ const Player = () => {
           alt=""
         />
 
-        <div className='w-24 h-1 bg-white/30 rounded-full'></div>
+        <div className='w-24 h-1 rounded-full bg-white/30'></div>
 
       </div>
 
